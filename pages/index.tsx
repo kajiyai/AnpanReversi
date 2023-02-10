@@ -1,7 +1,11 @@
-import React from 'react';
+// アンパンの画像パス
+const IMG_PATH01 = '/anpan.png'
+
+import React, { useState } from 'react';
 
 const TwoDimensionalArray: React.FC = () => {
   const twoDimensionalArray: number[][] = [];
+  const [clicked, setClicked] = useState<number[][]>(Array(8).fill(Array(8).fill(0)));
 
   for (let i = 0; i < 8; i++) {
     twoDimensionalArray[i] = [];
@@ -15,6 +19,14 @@ const TwoDimensionalArray: React.FC = () => {
   twoDimensionalArray[4][3] = 1;
   twoDimensionalArray[4][4] = 0;
 
+  const handleClick = (i: number, j: number) => {
+    setClicked((prevState) => {
+      const newState = JSON.parse(JSON.stringify(prevState));
+      newState[i][j] = prevState[i][j] === 1 ? 0 : 1;
+      return newState;
+    });
+  };
+
   return (
     <div className="grid-container">
       <table>
@@ -22,12 +34,11 @@ const TwoDimensionalArray: React.FC = () => {
           {twoDimensionalArray.map((row, i) => (
             <tr key={i}>
               {row.map((col, j) => (
-                <td key={j}>
-                  {col === 1 ? (
+                <td key={j} onClick={() => handleClick(i, j)}>
+                  {clicked[i][j] === 1 ? (
                     <div className="grid-item-active">
                       <img
-                        // anpan img
-                        src={'/anpan.png'}
+                        src={IMG_PATH01}
                         alt="your-image"
                         style={{
                           display: 'block',
