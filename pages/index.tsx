@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 
 const Reversi: React.FC = () => {
   const [twoDimensionalArray, setTwoDimensionalArray] = useState<number[][]>([]);
+  const [currentPlayer, setCurrentPlayer] = useState<number>(0);
 
-  // 2次元配列の初期化
+  // 2D array initialization
   if (twoDimensionalArray.length === 0) {
     for (let i = 0; i < 8; i++) {
       twoDimensionalArray[i] = [];
@@ -23,13 +24,12 @@ const Reversi: React.FC = () => {
   const [imgPath2, setImgPath2] = useState<string>('/anpan_gray.png');
 
   const handleClick = (i: number, j: number) => {
-    const updatedArray = [...twoDimensionalArray];
-    if (updatedArray[i][j] === -1) {
-      updatedArray[i][j] = 0;
-    } else {
-      updatedArray[i][j] = updatedArray[i][j] === 0 ? 1 : 0;
+    if (twoDimensionalArray[i][j] === -1) {
+      const updatedArray = [...twoDimensionalArray];
+      updatedArray[i][j] = currentPlayer;
+      setTwoDimensionalArray(updatedArray);
+      setCurrentPlayer((prev) => (prev + 1) % 2);
     }
-    setTwoDimensionalArray(updatedArray);
   };
 
   return (
