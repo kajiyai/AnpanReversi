@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 const TwoDimensionalArray: React.FC = () => {
   const twoDimensionalArray: number[][] = [];
 
@@ -23,7 +22,25 @@ const TwoDimensionalArray: React.FC = () => {
           {twoDimensionalArray.map((row, i) => (
             <tr key={i}>
               {row.map((col, j) => (
-                <td key={j} className={col === 1 ? 'grid-item-active' : 'grid-item-inactive'} />
+                <td key={j}>
+                  {col === 1 ? (
+                    <div className="grid-item-active">
+                      <img
+                        // anpan img
+                        src={'/anpan.png'}
+                        alt="your-image"
+                        style={{
+                          display: 'block',
+                          margin: '0 auto',
+                          maxWidth: '100%',
+                          maxHeight: '100%',
+                        }}
+                      />
+                    </div>
+                  ) : (
+                    <div className="grid-item-inactive" />
+                  )}
+                </td>
               ))}
             </tr>
           ))}
@@ -32,5 +49,4 @@ const TwoDimensionalArray: React.FC = () => {
     </div>
   );
 };
-
 export default TwoDimensionalArray;
