@@ -20,47 +20,98 @@ const Reversi: React.FC = () => {
     }
   }
 
+  const [imgPath0, setImgPath0] = useState<string>('');
   const [imgPath1, setImgPath1] = useState<string>('/anpan.png');
   const [imgPath2, setImgPath2] = useState<string>('/anpan_gray.png');
 
+  const isValidMove = (i: number, j: number): boolean => {
+    if (twoDimensionalArray[i][j] !== -1) {
+      return false;
+    }
+    for (let x = -1; x <= 1; x++) {
+      for (let y = -1; y <= 1; y++) {
+        if (x === 0 && y === 0) {
+          continue;
+        }
+        let row = i + x;
+        let col = j + y;
+        if (row >= 0 && row < 8 && col >= 0 && col < 8 && twoDimensionalArray[row][col] === (currentPlayer + 1) % 2) {
+          row += x;
+          col += y;
+          while (row >= 0 && row < 8 && col >= 0 && col < 8 && twoDimensionalArray[row][col] === (currentPlayer + 1) % 2) {
+            row += x;
+            col += y;
+          }
+          if (row >= 0 && row < 8 && col >= 0 && col < 8 && twoDimensionalArray[row][col] === currentPlayer) {
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  };
   const handleClick = (i: number, j: number) => {
-    if (twoDimensionalArray[i][j] === -1) {
-      const updatedArray = [...twoDimensionalArray];
+    if (isValidMove(i, j)) {
+      let updatedArray = [...twoDimensionalArray];
       updatedArray[i][j] = currentPlayer;
+      for (let x = -1; x <= 1; x++) {
+        for (let y = -1; y <= 1; y++) {
+          if (x === 0 && y === 0) {
+            continue;
+          }
+          let row = i + x;
+          let col = j + y;
+          if (row >= 0 && row < 8 && col >= 0 && col < 8 && twoDimensionalArray[row][col] === (currentPlayer + 1) % 2) {
+            flipTiles(row, col, updatedArray, x, y, currentPlayer);
+          }
+        }
+      }
       setTwoDimensionalArray(updatedArray);
-      setCurrentPlayer((prev) => (prev + 1) % 2);
+      setCurrentPlayer((currentPlayer + 1) % 2);
     }
   };
 
-  return (
-    <div className="grid-container">
+  const flipTiles = (row: number, col: number, updatedArray: number[][], x: number, y: number, currentPlayer: number) => {
+    while (row >= 0 && row < 8 && col >= 0 && col < 8 && twoDimensionalArray[row][col] === (currentPlayer + 1) % 2) {
+      updatedArray[row][col] = currentPlayer;
+      row += x;
+      col += y;
+    }
+  };
+
+
+  const renderBoard = () => {
+    return (
       <table>
         <tbody>
-          {twoDimensionalArray.map((row, i) => (
+          {twoDimensionalArray.map((rowArray, i) => (
             <tr key={i}>
-              {row.map((col, j) => (
-                <td key={j}>
-                  {col !== -1 ? (
-                    <div
-                      className={col === 1 ? 'grid-item-active' : 'grid-item-inactive'}
-                      onClick={() => handleClick(i, j)}
-                    >
-                      <img
-                        src={col === 0 ? imgPath1 : imgPath2}
-                        alt="grid-item"
-                        style={{ width: '100%', height: '100%' }}
-                      />
-                    </div>
+              {rowArray.map((cell, j) => (
+                <td key={j} onClick={() => handleClick(i, j)}>
+                  {cell === -1 ? (
+                    <img src={imgPath0} alt='空白' style={{ width: '50px', height: '50px' }} />
+                  ) : cell === 0 ? (
+                    <img src={imgPath1} alt='black' style={{ width: '50px', height: '50px' }} />
                   ) : (
-                    <div className="grid-item-inactive" onClick={() => handleClick(i, j)} />
+                    <img src={imgPath2} alt='white' style={{ width: '50px', height: '50px' }} />
                   )}
                 </td>
+
               ))}
             </tr>
           ))}
         </tbody>
       </table>
+    );
+  };
+
+  return (
+    <div>
+      <h1>Reversi Game</h1>
+      {renderBoard()}
+      <p>Current Player: {currentPlayer === 0 ? 'Black' : 'White'}</p>
     </div>
+
   );
 };
 
