@@ -1,0 +1,24 @@
+Django>=4.1,<4.2
+django-environ
+
+# DB
+psycopg2-binary
+
+# linter & formatter
+black
+flake8
+isort
+
+# DRF
+# django-cors-headers
+# djangorestframework
+
+# WebSockets
+channels
+daphne
+channels_redis
+
+# Create API docment
+# coreapi
+# Pygments
+# Markdown
