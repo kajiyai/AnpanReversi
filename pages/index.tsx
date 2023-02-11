@@ -94,10 +94,6 @@ const Reversi: React.FC = () => {
     }
   };
 
-
-
-
-
   const renderBoard = () => {
     return (
       <table>
@@ -107,7 +103,9 @@ const Reversi: React.FC = () => {
               {rowArray.map((cell, j) => (
                 <td key={j} onClick={() => handleClick(i, j)} style={{ width: '50px', height: '50px', border: 'solid 1px black' }}>
                   {cell === -1 ? (
-                    <p style={{ width: '50px', height: '50px' }}></p>
+                    isValidMove(i, j) ? (
+                      <div onClick={() => handleClick(i, j)} style={{ width: '50px', height: '50px', borderRadius: '50%', backgroundColor: 'gray' }} />
+                    ) : null
                   ) : cell === 0 ? (
                     <img src={ANPAN_IMAGE_PATH} alt='black' style={{ width: '50px', height: '50px' }} />
                   ) : (
