@@ -107,7 +107,7 @@ const Reversi: React.FC = () => {
               {rowArray.map((cell, j) => (
                 <td key={j} onClick={() => handleClick(i, j)} style={{ width: '50px', height: '50px', border: 'solid 1px black' }}>
                   {cell === -1 ? (
-                    <p>{twoDimensionalArray[i][j]}</p>
+                    <p style={{ width: '50px', height: '50px' }}></p>
                   ) : cell === 0 ? (
                     <img src={ANPAN_IMAGE_PATH} alt='black' style={{ width: '50px', height: '50px' }} />
                   ) : (
