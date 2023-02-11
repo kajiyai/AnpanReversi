@@ -49,6 +49,7 @@ const Reversi: React.FC = () => {
     }
     return false;
   };
+
   const handleClick = (i: number, j: number) => {
     if (isValidMove(i, j)) {
       let updatedArray = [...twoDimensionalArray];
@@ -67,7 +68,21 @@ const Reversi: React.FC = () => {
       }
       setTwoDimensionalArray(updatedArray);
       setCurrentPlayer((currentPlayer + 1) % 2);
+    } else if (checkIfNoMovesLeft()) {
+      // Check if no moves left for the current player
+      setCurrentPlayer((currentPlayer + 1) % 2);
     }
+  };
+
+  const checkIfNoMovesLeft = () => {
+    for (let i = 0; i < 8; i++) {
+      for (let j = 0; j < 8; j++) {
+        if (isValidMove(i, j)) {
+          return false;
+        }
+      }
+    }
+    return true;
   };
 
   const flipTiles = (row: number, col: number, updatedArray: number[][], x: number, y: number, currentPlayer: number) => {
@@ -95,31 +110,41 @@ const Reversi: React.FC = () => {
   };
 
   const renderBoard = () => {
-    return (
-      <table>
-        <tbody>
-          {twoDimensionalArray.map((rowArray, i) => (
-            <tr key={i}>
-              {rowArray.map((cell, j) => (
-                <td key={j} onClick={() => handleClick(i, j)} style={{ width: '50px', height: '50px', border: 'solid 1px black' }}>
-                  {cell === -1 ? (
-                    isValidMove(i, j) ? (
-                      <div onClick={() => handleClick(i, j)} style={{ width: '50px', height: '50px', borderRadius: '50%', backgroundColor: 'gray' }} />
-                    ) : null
-                  ) : cell === 0 ? (
-                    <img src={ANPAN_IMAGE_PATH} alt='black' style={{ width: '50px', height: '50px' }} />
-                  ) : (
-                    <img src={ANPAN_GRAY_IMAGE_PATH} alt='white' style={{ width: '50px', height: '50px' }} />
-                  )}
-                </td>
+    // count stones
+    const blackStoneCount = twoDimensionalArray.flat().filter(cell => cell === 0).length;
+    const whiteStoneCount = twoDimensionalArray.flat().filter(cell => cell === 1).length;
 
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    return (
+      <div style={{ display: 'flex' }}>
+        <table>
+          <tbody>
+            {twoDimensionalArray.map((rowArray, i) => (
+              <tr key={i}>
+                {rowArray.map((cell, j) => (
+                  <td key={j} onClick={() => handleClick(i, j)} style={{ width: '50px', height: '50px', border: 'solid 1px black' }}>
+                    {cell === -1 ? (
+                      isValidMove(i, j) ? (
+                        <div onClick={() => handleClick(i, j)} style={{ width: '50px', height: '50px', borderRadius: '50%', backgroundColor: 'gray' }} />
+                      ) : null
+                    ) : cell === 0 ? (
+                      <img src={ANPAN_IMAGE_PATH} alt='black' style={{ width: '50px', height: '50px' }} />
+                    ) : (
+                      <img src={ANPAN_GRAY_IMAGE_PATH} alt='white' style={{ width: '50px', height: '50px' }} />
+                    )}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <div style={{ marginLeft: '20px' }}>
+          <div>Black: {blackStoneCount}</div>
+          <div>White: {whiteStoneCount}</div>
+        </div>
+      </div>
     );
   };
+
 
   return (
     <div>
