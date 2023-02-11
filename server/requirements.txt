@@ -10,8 +10,8 @@ flake8
 isort
 
 # DRF
-# django-cors-headers
-# djangorestframework
+django-cors-headers
+djangorestframework
 
 # WebSockets
 channels
