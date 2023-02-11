@@ -40,6 +40,7 @@ CSRF_TRUSTED_ORIGINS = env.list("DJANGO_CSRF_TRUSTED_ORIGINS", default=[])
 INSTALLED_APPS = [
     # # Django chanells
     "daphne",
+    "vsroom",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -51,6 +52,8 @@ INSTALLED_APPS = [
     # # DRF
     "rest_framework",
     "rest_framework.authtoken",
+    # myapps
+    "person.apps.PersonConfig"
 ]
 
 MIDDLEWARE = [

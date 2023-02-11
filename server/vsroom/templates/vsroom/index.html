@@ -1,0 +1,30 @@
+<!-- chat/templates/chat/index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Chat Rooms</title>
+</head>
+<body>
+    Tell me your name.<br>
+    <input id="user-name-input" type="text" size="100"><br>
+    And what vs room would you like to enter?<br>
+    <input id="room-name-input" type="text" size="100"><br>
+    <input id="submit" type="button" value="Enter">
+
+    <script>
+        // roomnameに関する記述
+        document.querySelector('#room-name-input').focus();
+        document.querySelector('#room-name-input').onkeyup = function(e) {
+            if (e.keyCode === 13) {  // enter, return
+                document.querySelector('#room-name-submit').click();
+            }
+        };
+        // 遷移先の指定
+        document.querySelector('#submit').onclick = function(e) {
+            var roomName = document.querySelector('#room-name-input').value;
+            window.location.pathname = '/vsroom/' + roomName + '/';
+        };
+    </script>
+</body>
+</html>
