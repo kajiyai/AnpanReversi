@@ -20,7 +20,9 @@ const Reversi: React.FC = () => {
     }
   }
 
-  const [imgPath0, setImgPath0] = useState<string>('');
+  // useState使わなくても良さそう
+  // const imgPath0;
+  // const [imgPath0, setImgPath0] = useState<string>('');
   const [imgPath1, setImgPath1] = useState<string>('/anpan.png');
   const [imgPath2, setImgPath2] = useState<string>('/anpan_gray.png');
 
@@ -72,12 +74,31 @@ const Reversi: React.FC = () => {
   };
 
   const flipTiles = (row: number, col: number, updatedArray: number[][], x: number, y: number, currentPlayer: number) => {
-    while (row >= 0 && row < 8 && col >= 0 && col < 8 && twoDimensionalArray[row][col] === (currentPlayer + 1) % 2) {
-      updatedArray[row][col] = currentPlayer;
-      row += x;
-      col += y;
+    let shouldFlip = false;
+    while (row >= 0 && row < 8 && col >= 0 && col < 8) {
+      if (updatedArray[row][col] === currentPlayer) {
+        shouldFlip = true;
+        break;
+      } else if (updatedArray[row][col] === (currentPlayer + 1) % 2) {
+        row += x;
+        col += y;
+      } else {
+        break;
+      }
+    }
+    if (shouldFlip) {
+      row -= x;
+      col -= y;
+      while (row >= 0 && row < 8 && col >= 0 && col < 8 && updatedArray[row][col] === (currentPlayer + 1) % 2) {
+        updatedArray[row][col] = currentPlayer;
+        row -= x;
+        col -= y;
+      }
     }
   };
+
+
+
 
 
   const renderBoard = () => {
@@ -89,7 +110,7 @@ const Reversi: React.FC = () => {
               {rowArray.map((cell, j) => (
                 <td key={j} onClick={() => handleClick(i, j)} style={{ width: '50px', height: '50px', border: 'solid 1px black' }}>
                   {cell === -1 ? (
-                    <p></p>
+                    <p>{twoDimensionalArray[i][j]}</p>
                   ) : cell === 0 ? (
                     <img src={imgPath1} alt='black' style={{ width: '50px', height: '50px' }} />
                   ) : (
