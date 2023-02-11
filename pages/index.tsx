@@ -138,8 +138,20 @@ const Reversi: React.FC = () => {
           </tbody>
         </table>
         <div style={{ marginLeft: '20px' }}>
-          <div>Black: {blackStoneCount}</div>
-          <div>White: {whiteStoneCount}</div>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <div style={{ position: 'relative' }}>Black: {blackStoneCount}</div>
+            {Array.from({ length: blackStoneCount }, (_, i) => (
+              <img src={ANPAN_IMAGE_PATH} alt='black' key={i} style={{ width: '50px', height: '50px', bottom: `${15 * i}px`, position: 'absolute' }} />
+            ))}
+          </div>
+        </div>
+        <div style={{ marginLeft: '20px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <div>White: {whiteStoneCount}</div>
+            {Array.from({ length: whiteStoneCount }, (_, i) => (
+              <img src={ANPAN_GRAY_IMAGE_PATH} alt='white' key={i} style={{ width: '50px', height: '50px', bottom: `${15 * i}px`, position: 'absolute' }} />
+            ))}
+          </div>
         </div>
       </div>
     );
@@ -163,7 +175,10 @@ const Reversi: React.FC = () => {
       <h1>Reversi Game</h1>
       {renderBoard()}
       {winner() ? (
-        <div style={{ color: 'red' }}>Winner: {winner()}!!</div>
+        <div>
+          <div style={{ color: 'red' }}>Winner: {winner()}</div>
+          <button style={{ marginLeft: '20px' }} onClick={() => window.location.reload()}>rematch</button>
+        </div>
       ) : (
         <p>Current Player: {currentPlayer === 0 ? 'Black' : 'White'}</p>
       )}
