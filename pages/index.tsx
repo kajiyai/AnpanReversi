@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 
+const ANPAN_IMAGE_PATH: string = '/anpan.png';
+const ANPAN_GRAY_IMAGE_PATH: string = '/anpan_gray.png';
+
 const Reversi: React.FC = () => {
   const [twoDimensionalArray, setTwoDimensionalArray] = useState<number[][]>([]);
   const [currentPlayer, setCurrentPlayer] = useState<number>(0);
@@ -19,12 +22,6 @@ const Reversi: React.FC = () => {
       }
     }
   }
-
-  // useState使わなくても良さそう
-  // const imgPath0;
-  // const [imgPath0, setImgPath0] = useState<string>('');
-  const [imgPath1, setImgPath1] = useState<string>('/anpan.png');
-  const [imgPath2, setImgPath2] = useState<string>('/anpan_gray.png');
 
   const isValidMove = (i: number, j: number): boolean => {
     if (twoDimensionalArray[i][j] !== -1) {
@@ -112,9 +109,9 @@ const Reversi: React.FC = () => {
                   {cell === -1 ? (
                     <p>{twoDimensionalArray[i][j]}</p>
                   ) : cell === 0 ? (
-                    <img src={imgPath1} alt='black' style={{ width: '50px', height: '50px' }} />
+                    <img src={ANPAN_IMAGE_PATH} alt='black' style={{ width: '50px', height: '50px' }} />
                   ) : (
-                    <img src={imgPath2} alt='white' style={{ width: '50px', height: '50px' }} />
+                    <img src={ANPAN_GRAY_IMAGE_PATH} alt='white' style={{ width: '50px', height: '50px' }} />
                   )}
                 </td>
 
