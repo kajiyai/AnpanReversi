@@ -146,13 +146,28 @@ const Reversi: React.FC = () => {
   };
 
 
+  const winner = () => {
+
+    // count stones
+    const blackStoneCount = twoDimensionalArray.flat().filter(cell => cell === 0).length;
+    const whiteStoneCount = twoDimensionalArray.flat().filter(cell => cell === 1).length;
+
+    if (blackStoneCount === 0) return 'White';
+    if (whiteStoneCount === 0) return 'Black';
+    if (blackStoneCount + whiteStoneCount === 64) return blackStoneCount > whiteStoneCount ? 'Black' : 'White';
+    return null;
+  };
+
   return (
     <div>
       <h1>Reversi Game</h1>
       {renderBoard()}
-      <p>Current Player: {currentPlayer === 0 ? 'Black' : 'White'}</p>
+      {winner() ? (
+        <div style={{ color: 'red' }}>Winner: {winner()}!!</div>
+      ) : (
+        <p>Current Player: {currentPlayer === 0 ? 'Black' : 'White'}</p>
+      )}
     </div>
-
   );
 };
 
