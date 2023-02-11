@@ -20,6 +20,10 @@ services:
       - .env
     depends_on:
       - db
+    command: >
+      /bin/sh -c
+        'python manage.py migrate &&
+        python manage.py runserver 0.0.0.0:8000'
   
   redis:
     image: redis:5

@@ -53,7 +53,8 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     # myapps
-    "person.apps.PersonConfig"
+    "person.apps.PersonConfig",
+    "apiv1.apps.Apiv1Config"
 ]
 
 MIDDLEWARE = [

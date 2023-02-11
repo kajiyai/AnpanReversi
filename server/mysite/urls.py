@@ -21,5 +21,6 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("person/", include("person.urls")),
     path("vsroom/", include("vsroom.urls")),
+    path("api/v1/", include("apiv1.urls")),
     # path("docs/", include_docs_urls(title='API Document')),
 ]
