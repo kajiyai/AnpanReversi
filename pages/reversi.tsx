@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import Link from 'next/link';
+
 
 const ANPAN_IMAGE_PATH: string = '/anpan.png';
 const ANPAN_GRAY_IMAGE_PATH: string = '/anpan_gray.png';
@@ -153,6 +155,16 @@ const Reversi: React.FC = () => {
                         ))}
                     </div>
                 </div>
+                <div style={{ marginLeft: '20px', color: 'blue' }}>
+                    <Link
+                        href={{
+                            pathname: '/'
+                            // query:{ username: ***}
+                        }}
+                    >
+                        ホームに戻る
+                    </Link>
+                </div>
             </div>
         );
     };
@@ -178,6 +190,14 @@ const Reversi: React.FC = () => {
                 <div>
                     <div style={{ color: 'red' }}>Winner: {winner()}</div>
                     <button style={{ marginLeft: '20px' }} onClick={() => window.location.reload()}>rematch</button>
+                    <Link
+                        href={{
+                            pathname: '/'
+                            // query:{ username: ***}
+                        }}
+                    >
+                        ホームに戻る
+                    </Link>
                 </div>
             ) : (
                 <p>Current Player: {currentPlayer === 0 ? 'Black' : 'White'}</p>
