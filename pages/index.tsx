@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 
 const ANPAN_IMAGE_PATH: string = '/anpan.png';
 const ANPAN_GRAY_IMAGE_PATH: string = '/anpan_gray.png';
-const WS_URL = `ws://localhost:8000/ws/vsroom/`;
+const WS_URL: string = `ws://localhost:8000/ws/vsroom/`;
 
 const Reversi: React.FC = () => {
   const router = useRouter();
