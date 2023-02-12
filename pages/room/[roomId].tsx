@@ -20,6 +20,7 @@ const Reversi: React.FC = () => {
       const data = JSON.parse(e.data)
       if (data && data.banmen) {
         setTwoDimensionalArray(data.banmen)
+        setCurrentPlayer((currentPlayer + 1) % 2);
       } else {
         console.error('web socket message is not valid')
       }
@@ -103,10 +104,8 @@ const Reversi: React.FC = () => {
       }
       // setTwoDimensionalArray(updatedArray);
       sendBanmen(updatedArray);
-      setCurrentPlayer((currentPlayer + 1) % 2);
     } else if (checkIfNoMovesLeft()) {
       // Check if no moves left for the current player
-      setCurrentPlayer((currentPlayer + 1) % 2);
     }
   };
 
