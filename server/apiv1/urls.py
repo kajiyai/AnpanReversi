@@ -4,8 +4,7 @@ from rest_framework import routers
 from . import views
 
 router = routers.DefaultRouter()
-# router.register("createroom", views.CreateRoomAPIView)
-# router.register("enterroom", views.EnterRoomViewSet)
+router.register("enter", views.EnterRoomViewSet)
 
 app_name = "apiv1"
 urlpatterns = [
