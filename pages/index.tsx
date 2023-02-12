@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import Link from 'next/link';
+
+
 
 const ANPAN_IMAGE_PATH: string = '/anpan.png';
 const ANPAN_GRAY_IMAGE_PATH: string = '/anpan_gray.png';
@@ -186,4 +189,32 @@ const Reversi: React.FC = () => {
   );
 };
 
-export default Reversi;
+
+
+const top: React.FC = () => {
+  return (
+    <>
+      <h1>
+        <Link
+          href={{
+            pathname: '/reversi'
+            // query:{ username: ***}
+          }}
+        >
+          ゲームを始める
+          {/* <a>ゲームを始める</a> */}
+        </Link>
+      </h1>
+
+      <div>
+        <ul>
+          <li>部屋を作る</li>
+          <li>部屋に入る</li>
+          <li>＊＊＊</li>
+        </ul>
+      </div>
+    </>
+  )
+};
+
+export default top;
