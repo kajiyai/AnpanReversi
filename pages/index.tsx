@@ -1,9 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useRouter } from 'next/router';
 
 const ANPAN_IMAGE_PATH: string = '/anpan.png';
 const ANPAN_GRAY_IMAGE_PATH: string = '/anpan_gray.png';
+const WS_URL = `ws://localhost:8000/ws/vsroom/`;
 
 const Reversi: React.FC = () => {
+  const router = useRouter();
+
+  const socketRef: any = useRef();
+  useEffect(() => {
+    console.log('use effect', router.pathname)
+    socketRef.current = new WebSocket(`${WS_URL}${11}/`);
+    socketRef.current.onmessage = (e: any) => {
+      console.log('get ws messsage')
+      const data = JSON.parse(e.data)
+      if (data && data.banmen) {
+        setTwoDimensionalArray(data.banmen)
+      }
+    }
+  }, [router.pathname]);
+
+  const sendBanmen = (banmen: number[][]) => {
+    const banmen_json = {
+      banmen,
+    }
+    if (socketRef.current && socketRef.current.send) {
+      console.log('send ws')
+      socketRef.current.send(JSON.stringify(banmen_json))
+    } else {
+      console.error('web socket not found')
+    }
+      
+  }
+
   const [twoDimensionalArray, setTwoDimensionalArray] = useState<number[][]>([]);
   const [currentPlayer, setCurrentPlayer] = useState<number>(0);
 
@@ -22,7 +52,7 @@ const Reversi: React.FC = () => {
       }
     }
   }
-
+  
   const isValidMove = (i: number, j: number): boolean => {
     if (twoDimensionalArray[i][j] !== -1) {
       return false;
@@ -66,7 +96,8 @@ const Reversi: React.FC = () => {
           }
         }
       }
-      setTwoDimensionalArray(updatedArray);
+      // setTwoDimensionalArray(updatedArray);
+      sendBanmen(updatedArray);
       setCurrentPlayer((currentPlayer + 1) % 2);
     } else if (checkIfNoMovesLeft()) {
       // Check if no moves left for the current player
