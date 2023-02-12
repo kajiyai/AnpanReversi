@@ -8,19 +8,23 @@ const WS_URL: string = `ws://localhost:8000/ws/vsroom/`;
 
 const Reversi: React.FC = () => {
   const router = useRouter();
+  const { roomId } = router.query;
 
   const socketRef: any = useRef();
   useEffect(() => {
-    console.log('use effect', router.pathname)
-    socketRef.current = new WebSocket(`${WS_URL}${11}/`);
+    console.log('use effect', router.pathname, roomId, router.query)
+    if (typeof roomId !== 'string') return;
+    socketRef.current = new WebSocket(`${WS_URL}${roomId}/`);
     socketRef.current.onmessage = (e: any) => {
       console.log('get ws messsage')
       const data = JSON.parse(e.data)
       if (data && data.banmen) {
         setTwoDimensionalArray(data.banmen)
+      } else {
+        console.error('web socket message is not valid')
       }
     }
-  }, [router.pathname]);
+  }, [roomId]);
 
   const sendBanmen = (banmen: number[][]) => {
     const banmen_json = {

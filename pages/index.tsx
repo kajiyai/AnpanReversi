@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Flex, Heading, Input, Text, Box } from '@chakra-ui/react';
-import axios from 'axios';
+// import axios from 'axios';
 
 const IndexPage = () => {
   const [inputUserName, setInputUserName] = useState<string>('')
@@ -8,17 +8,20 @@ const IndexPage = () => {
   const [inputJoinRoomName, setInputJoinRoomName] = useState<string>('')
 
   const createRoom = () => {
-    axios.post('http://localhost:8000/api/v1/create', {
-      name: inputUserName,
-      room_id: inputCreateRoomName,
-    })
+    // axios.post('http://localhost:8000/api/v1/create', {
+    //   name: inputUserName,
+    //   room_id: inputCreateRoomName,
+    // })
     // .then(() => {
       
     // })
   }
 
   const joinRoom = () => {
-
+    // axios.post('http://localhost:8000/api/v1/enter', {
+    //   name: inputUserName,
+    //   room_id: inputJoinRoomName,
+    // })
   }
 
   return  (
