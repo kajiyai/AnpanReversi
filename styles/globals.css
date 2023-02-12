@@ -99,7 +99,7 @@ a {
 .grid-item-active {
   width: 60px;
   height: 60px;
-  background-color: black;
+  background-color: white;
 }
 
 .grid-item-inactive {
