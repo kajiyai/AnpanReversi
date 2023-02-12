@@ -8,7 +8,7 @@ const WS_URL = `ws://localhost:8000/ws/vsroom/`;
 const Reversi: React.FC = () => {
   const router = useRouter();
 
-  let socketRef: any = useRef();
+  const socketRef: any = useRef();
   useEffect(() => {
     console.log('use effect', router.pathname)
     socketRef.current = new WebSocket(`${WS_URL}${11}/`);
@@ -52,7 +52,7 @@ const Reversi: React.FC = () => {
       }
     }
   }
-
+  
   const isValidMove = (i: number, j: number): boolean => {
     if (twoDimensionalArray[i][j] !== -1) {
       return false;
