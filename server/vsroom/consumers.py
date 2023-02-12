@@ -23,17 +23,17 @@ class VSConsumer(AsyncWebsocketConsumer):
     async def receive(self, text_data):
         print('receive', text_data)
         text_data_json = json.loads(text_data)
-        message = text_data_json["message"]
+        banmen = text_data_json["banmen"]
 
         # Send message to room group
         await self.channel_layer.group_send(
-            self.room_group_name, {"type": "chat_message", "message": message}
+            self.room_group_name, {"type": "chat_message", "banmen": banmen}
         )
 
     # Receive message from room group
     async def chat_message(self, event):
         print('chat_message', event)
-        message = event["message"]
+        banmen = event["banmen"]
 
         # Send message to WebSocket
-        await self.send(text_data=json.dumps({"message": message}))
+        await self.send(text_data=json.dumps({"banmen": banmen}))
